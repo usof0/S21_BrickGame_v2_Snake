@@ -2,7 +2,7 @@
 #define BRICK_GAME_SNAKE_SNAKE_GAME_H
 
 #include <vector>
-// #include <utility>
+#include <utility>
 
 namespace s21 {
     enum Direction {UP, DOWN, LEFT, RIGHT};
@@ -20,6 +20,10 @@ namespace s21 {
         void changeDirection(Direction newDirection);
         bool isGameOver() const;
         int getScore() const;
+        int getWidth() const;
+        int getHeigh() const;
+        std::vector<Point> getSnake() const;
+        Point getApple() const;
 
     private:
         int width, height;
@@ -32,7 +36,7 @@ namespace s21 {
         void generateApple();
         void moveSnake();
         bool checkCollision() const;
-        void checkEatApple() const;
+        bool checkEatApple() const;
     };
 
 }   // namespace s21

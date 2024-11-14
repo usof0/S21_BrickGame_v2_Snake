@@ -8,7 +8,7 @@ namespace s21 {
     }
 
     void GameController::updateGame() {
-        gameupdate();
+        game.update();
         if (game.isGameOver()) fsm.transitionTo(GAME_OVER);
     }
 }   // namespace s21

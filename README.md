@@ -30,8 +30,7 @@ The Tetris game developed in BrickGame v1.0 must be connected to the desktop int
 ## Chapter I 
 # General information
 
-Remember to use finite-state machines to formalize the logic of the game. You can find descriptions and examples of FMS to refresh your knowledge [here](materials/brick-game-v1.0.md).
-
+Remember to use finite-state machines to formalize the logic of the game.
 ### Snake
 
 ![Snake](misc/images/snake-game.png)

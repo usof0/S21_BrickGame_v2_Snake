@@ -1,5 +1,5 @@
 #include "SnakeGame.h"
-// #include <cstdlib>
+#include <cstdlib>
 #include <ctime>
 
 namespace s21 {
@@ -16,7 +16,7 @@ namespace s21 {
         generateApple();
     }
 
-    void changeDirection(Direction newDirection) {
+    void SnakeGame::changeDirection(Direction newDirection) {
         if ((newDirection == UP && direction != DOWN) || (newDirection == DOWN && direction != UP) || (newDirection == LEFT && direction != RIGHT) || (newDirection == RIGHT && direction != LEFT)) {
             direction = newDirection;
         }
@@ -27,15 +27,31 @@ namespace s21 {
 
     void SnakeGame::update() {
         if (!gameOver) {
+            // moveSnake();
             if (checkCollision()) gameOver = true;
             else if (checkEatApple()) {
+                generateApple();
                 score++;
-                Position newTail = snake.back();
+                Point newTail = snake.back();
                 moveSnake();
                 snake.insert(snake.end(), newTail);
-                generateApple();
-            }
+            } else moveSnake();
         }
+    }
+
+    int SnakeGame::getWidth() const {
+        return width;
+    }
+
+    int SnakeGame::getHeigh() const {
+        return height;
+    }
+
+    std::vector<Point> SnakeGame::getSnake() const {
+        return snake;
+    }
+    Point SnakeGame::getApple() const {
+        return apple;
     }
 
     // private methods:
@@ -45,32 +61,35 @@ namespace s21 {
     }
     
     void SnakeGame::moveSnake() {
-        Position newHead = snake.front();
+        Point newHead = snake.front();
         switch (direction) {
             case UP: newHead.y--; break;
             case DOWN: newHead.y++; break;
             case LEFT: newHead.x--; break;
             case RIGHT: newHead.x++; break;
         }
-        snake.pop_back();
         snake.insert(snake.begin(), newHead);
+        snake.pop_back();
+        
     }
 
 
-
-    void checkEatApple() const {
-        if (snake.front().x == apple.x && snakeGame.front().y == apple.y)
+    bool SnakeGame::checkEatApple() const {
+        if (snake.front().x == apple.x && snake.front().y == apple.y)
             return true;
         return false;
     }
 
     bool SnakeGame::checkCollision() const {
-        const Position head = snake.front();
+        const Point head = snake.front();
         if (head.x < 0 || head.x >= width || head.y < 0 || head.y >= height)
             return true;
-        for (const auto& part : snake) {
-            if (part != snake.front() && part == head) return true;
+        for (int i = 1; i < snake.size(); i++) {
+            if (head.x == snake[i].x && head.y == snake[i].y) return true;
         }
+        // for (const auto& part : snake) {
+        //     if ((part.x == snake.front().x && part.y == snake.front().y) && (part.x == head.x && part.y == head.y)) return true;
+        // }
         return false;
     }
 
